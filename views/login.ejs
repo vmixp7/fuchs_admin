@@ -1,0 +1,23 @@
+<% layout("layout") %>
+
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow p-4" style="width: 350px;">
+            <h3 class="text-center mb-4">後台登入</h3>
+            <% if (message) { %>
+                <div class="alert alert-danger text-center">
+                    <%= message %>
+                </div>
+                <% } %>
+                    <form method="POST" action="/login">
+                        <div class="mb-3">
+                            <label>帳號</label>
+                            <input type="text" name="username" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>密碼</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        <button class="btn btn-primary w-100">登入</button>
+                    </form>
+        </div>
+    </div>

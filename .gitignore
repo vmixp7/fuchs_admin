@@ -1,0 +1,19 @@
+# 註釋：忽略編譯產生的檔案和目錄
+/build/
+/dist/
+*.o
+*.pyc
+
+# 註釋：忽略日誌和臨時檔案
+*.log
+*.tmp
+# 忽略所有名為 node_modules 的資料夾
+node_modules/
+
+# 註釋：作業系統相關檔案
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# 註釋：程式碼編輯器和 IDE 相關
+.vscode/ # VS Code 設定檔
+.idea/ # IntelliJ / WebStorm 設定檔
