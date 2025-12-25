@@ -9,6 +9,8 @@ const app = express();
 app.engine("ejs", ejsMate);  // 使用 ejs-mate
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
@@ -21,9 +23,4 @@ app.use(
 
 app.use("/", route);
 
-app.get("/dashboard", (req, res) => {
-    if (!req.session.user) return res.redirect("/");
-    res.render("dashboard", { username: req.session.user.username, title: "管理後台" });
-});
-
-app.listen(3000, () => console.log("🚀 Server running at http://localhost:3000"));
+app.listen(5000, () => console.log("🚀 Server running at http://localhost:5000"));

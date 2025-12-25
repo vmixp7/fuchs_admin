@@ -1,20 +1,153 @@
 body {
     font-family: "Microsoft JhengHei", sans-serif;
+    background-color: #f8f9fa;
 }
 
 #wrapper {
     min-height: 100vh;
 }
 
+/* 淡色側邊欄 */
 #sidebar {
     width: 230px;
+    background: linear-gradient(180deg, #e3f2fd 0%, #bbdefb 100%) !important;
+    border-right: 1px solid #90caf9;
+}
+
+#sidebar h4 {
+    color: #1976d2;
+    font-weight: 600;
+}
+
+#sidebar .nav-link {
+    color: #1565c0 !important;
+    font-weight: 500;
+    transition: all 0.3s;
 }
 
 #sidebar .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(25, 118, 210, 0.1);
     border-radius: 8px;
+    transform: translateX(5px);
 }
 
+#sidebar .nav-link i {
+    color: #1976d2;
+}
+
+#sidebar .nav-link.text-danger {
+    color: #e57373 !important;
+}
+
+#sidebar .nav-link.text-danger:hover {
+    background-color: rgba(229, 115, 115, 0.1);
+}
+
+/* 淡色卡片樣式 */
 .card {
     border-radius: 12px;
+    border: 1px solid #e3f2fd;
+}
+
+.card-header {
+    background: #729fc3;
+    color: white;
+    border: none;
+}
+
+.card-header.bg-light-green {
+    background: linear-gradient(135deg, #a5d6a7 0%, #81c784 100%);
+    color: white;
+    border: none;
+}
+
+.card-header.bg-light-purple {
+    background: linear-gradient(135deg, #ce93d8 0%, #ba68c8 100%);
+    color: white;
+    border: none;
+}
+
+.card-header.bg-light-orange {
+    background: linear-gradient(135deg, #ffcc80 0%, #ffb74d 100%);
+    color: white;
+    border: none;
+}
+
+/* 淡色按鈕 */
+.btn-light-blue {
+    background: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
+    color: white;
+    border: none;
+}
+
+.btn-light-blue:hover {
+    background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
+    color: white;
+}
+
+.btn-light-green {
+    background: linear-gradient(135deg, #a5d6a7 0%, #81c784 100%);
+    color: white;
+    border: none;
+}
+
+.btn-light-green:hover {
+    background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);
+    color: white;
+}
+
+.btn-light-orange {
+    background: linear-gradient(135deg, #ffcc80 0%, #ffb74d 100%);
+    color: white;
+    border: none;
+}
+
+.btn-light-orange:hover {
+    background: linear-gradient(135deg, #ffb74d 0%, #ffa726 100%);
+    color: white;
+}
+
+.btn-light-red {
+    background: linear-gradient(135deg, #ef9a9a 0%, #e57373 100%);
+    color: white;
+    border: none;
+}
+
+.btn-light-red:hover {
+    background: linear-gradient(135deg, #e57373 0%, #ef5350 100%);
+    color: white;
+}
+
+.btn-light-info {
+    background: linear-gradient(135deg, #80deea 0%, #4dd0e1 100%);
+    color: white;
+    border: none;
+}
+
+.btn-light-info:hover {
+    background: linear-gradient(135deg, #4dd0e1 0%, #26c6da 100%);
+    color: white;
+}
+
+.btn-light-purple {
+    background: linear-gradient(135deg, #ce93d8 0%, #ba68c8 100%);
+    color: white;
+    border: none;
+}
+
+.btn-light-purple:hover {
+    background: linear-gradient(135deg, #ba68c8 0%, #ab47bc 100%);
+    color: white;
+}
+
+/* Topbar 樣式 */
+.navbar.bg-white {
+    border-bottom: 2px solid #e3f2fd;
+}
+
+/* DataTable 表頭淡色 */
+.table-light-header {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #1565c0;
+    font-weight: 600;
 }

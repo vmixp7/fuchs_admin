@@ -1,7 +1,8 @@
 
 import puppeteer from 'puppeteer';
+import proxy from 'express-http-proxy';
 
-export const getAutomotive = async (req, res) => {
+export const proxyAutomotive = async (req, res) => {
 
     const url = "https://www.fuchs.com/sea/tw/products/product-program/automotive-lubricants/";
 
@@ -71,6 +72,59 @@ export const getAutomotive = async (req, res) => {
     } finally {
         if (browser) await browser.close();
     }
+};
+
+
+
+export const fuchs = async (req, res) => {
+    console.log("---start---");
+
+    const targetUrl = 'https://www.fuchs.com/sea/tw/products/product-program/automotive-lubricants/';
+    // 注意：express-http-proxy 建議將目標設定為根網址，然後用 path 處理子路徑
+
+    const fuchsProxy = proxy(targetUrl, {
+
+        // // 核心修正：目標路徑處理
+        // proxyReqPathResolver: (req) => {
+        //     // 這是一個簡單的範例，將所有請求導向特定的子頁面
+        //     return '/sea/tw/products/product-program/automotive-lubricants/' + (req.url === '/' ? '' : req.url);
+        //     // 💡 提示：如果您的上層路由是 app.use('/proxy/fuchs', fuchs)
+        //     // 則這裡的 req.url 是 /proxy/fuchs 之後的路徑。
+        // },
+
+        // 修正名稱
+        preserveHostHeader: true,
+
+        // proxyReqOptDecorator: 可用，但名稱不建議改動
+        proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
+            // 🔸 可在這裡調整 request header
+            proxyReqOpts.headers['User-Agent'] = 'Mozilla/5.0';
+            // 處理 SSL 憑證忽略
+            proxyReqOpts.rejectUnauthorized = false;
+            return proxyReqOpts;
+        },
+
+        userResHeaderDecorator: (headers, userReq, userRes, proxyReq, proxyRes) => {
+            // 🔹 移除阻擋 iframe 的 header
+            delete headers['x-frame-options'];
+            delete headers['content-security-policy'];
+
+            // 🔹 允許跨域嵌入
+            headers['Access-Control-Allow-Origin'] = '*';
+            headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS';
+            headers['Access-Control-Allow-Headers'] = '*';
+
+            return headers;
+        },
+
+        // 修正錯誤處理名稱
+        errorCallback: (err, res) => {
+            console.error('Proxy error:', err.message);
+            res.status(500).send('Proxy failed: ' + err.message);
+        }
+    });
+
+    fuchsProxy(req, res);
 };
 
 

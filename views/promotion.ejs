@@ -1,0 +1,244 @@
+<% layout("layout") %>
+
+    <!-- Page Content -->
+    <div class="flex-grow-1">
+        <!-- Topbar -->
+        <nav class="navbar navbar-light bg-white border-bottom px-4">
+            <span class="navbar-text">👋 歡迎，<%= username %></span>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container-fluid py-4">
+            <h4 class="mb-4"><i class="bi bi-megaphone me-2"></i> 促銷訊息管理</h4>
+
+            <!-- 新增表單 -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light-blue">
+                    <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i> 新增促銷訊息</h5>
+                </div>
+                <div class="card-body">
+                    <form id="promotionForm" enctype="multipart/form-data">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="message" class="form-label">促銷訊息 <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="date" class="form-label">日期 <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="pdf" class="form-label">圖片或 PDF 檔案</label>
+                                <input type="file" class="form-control" id="pdf" name="pdf" accept=".jpg,.jpeg,.png,.gif,.webp,.pdf">
+                                <small class="text-muted">支援圖片（JPEG、PNG、GIF、WebP）或 PDF</small>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-light-blue">
+                                <i class="bi bi-save me-1"></i> 新增
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-1"></i> 清除
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 列表 -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i> 促銷訊息列表</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="promotionTable" class="table table-striped table-hover table-bordered">
+                            <thead class="table-light-header">
+                                <tr>
+                                    <th>編號</th>
+                                    <th>促銷訊息</th>
+                                    <th>日期</th>
+                                    <th>檔案</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- 資料會由 DataTables 載入 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content -->
+    </div>
+    </div>
+
+    <!-- 修改 Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-light-orange">
+                    <h5 class="modal-title"><i class="bi bi-pencil me-2"></i> 修改促銷訊息</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" enctype="multipart/form-data">
+                        <input type="hidden" id="editId" name="id">
+                        <div class="mb-3">
+                            <label for="editMessage" class="form-label">促銷訊息 <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="editMessage" name="message" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDate" class="form-label">日期 <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="editDate" name="date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPdf" class="form-label">圖片或 PDF 檔案</label>
+                            <input type="file" class="form-control" id="editPdf" name="pdf" accept=".jpg,.jpeg,.png,.gif,.webp,.pdf">
+                            <small class="text-muted">如不需更換檔案，請留空</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-light-orange" onclick="updatePromotion()">
+                        <i class="bi bi-save me-1"></i> 更新
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let table;
+
+        // 初始化 DataTable
+        $(document).ready(function () {
+            table = $('#promotionTable').DataTable({
+                ajax: {
+                    url: '/api/promotions',
+                    dataSrc: ''
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'message' },
+                    { data: 'date' },
+                    {
+                        data: 'pdf',
+                        render: function (data, type, row) {
+                            if (data) {
+                                // 检查文件类型
+                                const ext = data.split('.').pop().toLowerCase();
+                                const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
+                                const isPdf = ext === 'pdf';
+
+                                if (isImage) {
+                                    return `<a href="${data}" target="_blank" class="btn btn-sm btn-light-info">
+                                        <i class="bi bi-image"></i> 查看圖片
+                                    </a>`;
+                                } else if (isPdf) {
+                                    return `<a href="${data}" target="_blank" class="btn btn-sm btn-light-info">
+                                        <i class="bi bi-file-pdf"></i> 查看 PDF
+                                    </a>`;
+                                } else {
+                                    return `<a href="${data}" target="_blank" class="btn btn-sm btn-light-info">
+                                        <i class="bi bi-file-earmark"></i> 查看檔案
+                                    </a>`;
+                                }
+                            }
+                            return '<span class="text-muted">無</span>';
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return `
+                            <button class="btn btn-sm btn-light-orange" onclick="editPromotion(${row.id})">
+                                <i class="bi bi-pencil"></i> 修改
+                            </button>
+                            <button class="btn btn-sm btn-light-red" onclick="deletePromotion(${row.id})">
+                                <i class="bi bi-trash"></i> 刪除
+                            </button>
+                        `;
+                        }
+                    }
+                ],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
+                },
+                order: [[0, 'desc']]
+            });
+        });
+
+        // 新增促銷訊息
+        $('#promotionForm').on('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            $.ajax({
+                url: '/api/promotions',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    alert('新增成功！');
+                    $('#promotionForm')[0].reset();
+                    table.ajax.reload();
+                },
+                error: function (xhr) {
+                    alert('新增失敗：' + (xhr.responseJSON?.message || '未知錯誤'));
+                }
+            });
+        });
+
+        // 開啟修改視窗
+        function editPromotion(id) {
+            $.get(`/api/promotions/${id}`, function (data) {
+                $('#editId').val(data.id);
+                $('#editMessage').val(data.message);
+                $('#editDate').val(data.date);
+                $('#editModal').modal('show');
+            });
+        }
+
+        // 更新促銷訊息
+        function updatePromotion() {
+            const id = $('#editId').val();
+            const formData = new FormData($('#editForm')[0]);
+
+            $.ajax({
+                url: `/api/promotions/${id}`,
+                type: 'PUT',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    alert('更新成功！');
+                    $('#editModal').modal('hide');
+                    table.ajax.reload();
+                },
+                error: function (xhr) {
+                    alert('更新失敗：' + (xhr.responseJSON?.message || '未知錯誤'));
+                }
+            });
+        }
+
+        // 刪除促銷訊息
+        function deletePromotion(id) {
+            if (confirm('確定要刪除此促銷訊息嗎？')) {
+                $.ajax({
+                    url: `/api/promotions/${id}`,
+                    type: 'DELETE',
+                    success: function (response) {
+                        alert('刪除成功！');
+                        table.ajax.reload();
+                    },
+                    error: function (xhr) {
+                        alert('刪除失敗：' + (xhr.responseJSON?.message || '未知錯誤'));
+                    }
+                });
+            }
+        }
+    </script>

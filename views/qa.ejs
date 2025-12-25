@@ -1,0 +1,223 @@
+<% layout("layout") %>
+
+    <!-- Page Content -->
+    <div class="flex-grow-1">
+        <!-- Topbar -->
+        <nav class="navbar navbar-light bg-white border-bottom px-4">
+            <span class="navbar-text">👋 歡迎，<%= username %></span>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container-fluid py-4">
+            <h4 class="mb-4"><i class="bi bi-question-circle me-2"></i> 常見問題管理</h4>
+
+            <!-- 新增表單 -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light-blue">
+                    <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i> 新增常見問題</h5>
+                </div>
+                <div class="card-body">
+                    <form id="qaForm">
+                        <div class="row g-3">
+                            <div class="col-md-5">
+                                <label for="que" class="form-label">問題 <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="que" name="que" rows="3" required></textarea>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="ans" class="form-label">答案 <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="ans" name="ans" rows="3" required></textarea>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="num" class="form-label">排序編號</label>
+                                <input type="number" class="form-control" id="num" name="num" value="0" min="0">
+                                <small class="text-muted">數字越小越前面</small>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-light-blue">
+                                <i class="bi bi-save me-1"></i> 新增
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-1"></i> 清除
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 列表 -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i> 常見問題列表</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="qaTable" class="table table-striped table-hover table-bordered">
+                            <thead class="table-light-header">
+                                <tr>
+                                    <th>編號</th>
+                                    <th>排序</th>
+                                    <th>問題</th>
+                                    <th>答案</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- 資料會由 DataTables 載入 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content -->
+    </div>
+</div>
+
+<!-- 修改 Modal -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light-orange">
+                <h5 class="modal-title"><i class="bi bi-pencil me-2"></i> 修改常見問題</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <input type="hidden" id="editId" name="id">
+                    <div class="mb-3">
+                        <label for="editQue" class="form-label">問題 <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="editQue" name="que" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAns" class="form-label">答案 <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="editAns" name="ans" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editNum" class="form-label">排序編號</label>
+                        <input type="number" class="form-control" id="editNum" name="num" min="0">
+                        <small class="text-muted">數字越小越前面</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-light-orange" onclick="updateQa()">
+                    <i class="bi bi-save me-1"></i> 更新
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let table;
+
+    // 初始化 DataTable
+    $(document).ready(function () {
+        table = $('#qaTable').DataTable({
+            ajax: {
+                url: '/api/qa',
+                dataSrc: ''
+            },
+            columns: [
+                { data: 'id' },
+                { data: 'num' },
+                { data: 'que' },
+                { data: 'ans' },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return `
+                            <button class="btn btn-sm btn-light-orange" onclick="editQa(${row.id})">
+                                <i class="bi bi-pencil"></i> 修改
+                            </button>
+                            <button class="btn btn-sm btn-light-red" onclick="deleteQa(${row.id})">
+                                <i class="bi bi-trash"></i> 刪除
+                            </button>
+                        `;
+                    }
+                }
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
+            },
+            order: [[1, 'asc'], [0, 'desc']]  // 先按排序編號升序，再按 ID 降序
+        });
+    });
+
+    // 新增常見問題
+    $('#qaForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const que = $('#que').val();
+        const ans = $('#ans').val();
+        const num = $('#num').val();
+
+        $.ajax({
+            url: '/api/qa',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ que, ans, num }),
+            success: function (response) {
+                alert('新增成功！');
+                $('#qaForm')[0].reset();
+                table.ajax.reload();
+            },
+            error: function (xhr) {
+                alert('新增失敗：' + (xhr.responseJSON?.message || '未知錯誤'));
+            }
+        });
+    });
+
+    // 開啟修改視窗
+    function editQa(id) {
+        $.get(`/api/qa/${id}`, function (data) {
+            $('#editId').val(data.id);
+            $('#editQue').val(data.que);
+            $('#editAns').val(data.ans);
+            $('#editNum').val(data.num);
+            $('#editModal').modal('show');
+        });
+    }
+
+    // 更新常見問題
+    function updateQa() {
+        const id = $('#editId').val();
+        const que = $('#editQue').val();
+        const ans = $('#editAns').val();
+        const num = $('#editNum').val();
+
+        $.ajax({
+            url: `/api/qa/${id}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({ que, ans, num }),
+            success: function (response) {
+                alert('更新成功！');
+                $('#editModal').modal('hide');
+                table.ajax.reload();
+            },
+            error: function (xhr) {
+                alert('更新失敗：' + (xhr.responseJSON?.message || '未知錯誤'));
+            }
+        });
+    }
+
+    // 刪除常見問題
+    function deleteQa(id) {
+        if (confirm('確定要刪除此常見問題嗎？')) {
+            $.ajax({
+                url: `/api/qa/${id}`,
+                type: 'DELETE',
+                success: function (response) {
+                    alert('刪除成功！');
+                    table.ajax.reload();
+                },
+                error: function (xhr) {
+                    alert('刪除失敗：' + (xhr.responseJSON?.message || '未知錯誤'));
+                }
+            });
+        }
+    }
+</script>

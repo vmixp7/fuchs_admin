@@ -27,6 +27,6 @@ export const login = (req, res) => {
 
 export const logout = (req, res) => {
     req.session.destroy(() => {
-        res.redirect("/login");
+        res.redirect("/");
     });
 };

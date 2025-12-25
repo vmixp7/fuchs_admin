@@ -1,0 +1,88 @@
+<% layout("layout") %>
+
+    <!-- Page Content -->
+    <div class="flex-grow-1">
+        <!-- Topbar -->
+        <nav class="navbar navbar-light bg-white border-bottom px-4">
+            <span class="navbar-text">👋 歡迎，<%= username %></span>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container-fluid py-4">
+            <h4 class="mb-4"><i class="bi bi-building me-2"></i> 公司簡介管理</h4>
+
+            <!-- 編輯表單 -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i> 編輯公司簡介</h5>
+                </div>
+                <div class="card-body">
+                    <form id="aboutForm">
+                        <input type="hidden" id="aboutId" name="id">
+                        <div class="mb-3">
+                            <label for="content" class="form-label">公司簡介內容 <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="content" name="content" rows="10" required
+                                placeholder="請輸入公司簡介內容..."></textarea>
+                            <small class="text-muted">此欄位為必填項</small>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-light-blue">
+                                <i class="bi bi-save me-1"></i> 儲存
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="loadAbout()">
+                                <i class="bi bi-arrow-clockwise me-1"></i> 重新載入
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content -->
+    </div>
+    </div>
+
+    <script>
+        // 頁面載入時獲取公司簡介
+        $(document).ready(function () {
+            loadAbout();
+        });
+
+        // 載入公司簡介
+        function loadAbout() {
+            $.get('/api/about', function (data) {
+                if (data) {
+                    $('#aboutId').val(data.id);
+                    $('#content').val(data.content);
+                }
+            }).fail(function (xhr) {
+                alert('載入公司簡介失敗：' + (xhr.responseJSON?.message || '未知錯誤'));
+            });
+        }
+
+        // 更新公司簡介
+        $('#aboutForm').on('submit', function (e) {
+            e.preventDefault();
+
+            const id = $('#aboutId').val();
+            const content = $('#content').val().trim();
+
+            if (!content) {
+                alert('公司簡介內容為必填項！');
+                return;
+            }
+
+            $.ajax({
+                url: '/api/about',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({ id: id, content: content }),
+                success: function (response) {
+                    alert('儲存成功！');
+                    loadAbout();
+                },
+                error: function (xhr) {
+                    alert('儲存失敗：' + (xhr.responseJSON?.message || '未知錯誤'));
+                }
+            });
+        });
+    </script>
