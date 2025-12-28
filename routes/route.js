@@ -11,6 +11,7 @@ import NewsController from "../controllers/newsController.js";
 import QaController from "../controllers/qaController.js";
 import CompanyActivityController from "../controllers/companyActivityController.js";
 import FuchsAboutController from "../controllers/fuchsAboutController.js";
+import IndexController from "../controllers/indexController.js";
 import upload from "../config/upload.js";
 
 const router = express.Router();
@@ -53,6 +54,9 @@ router.put("/api/about", AboutController.update);
 // 活動 API 路由
 router.get("/api/activities", ActivityController.getActivities);
 
+// 研討會 API 路由
+router.get("/api/seminar", ActivityController.getSeminars);
+
 // 登山類型 API 路由
 router.get("/api/hiking-types", HikingTypeController.getAll);
 
@@ -74,5 +78,6 @@ router.get("/api/company-activities", CompanyActivityController.getActivities);
 
 // Fuchs 關於資料 API 路由
 router.get("/api/fuchs-about", FuchsAboutController.get);
+router.get("/api/index", IndexController.getAll);
 
 export default router;

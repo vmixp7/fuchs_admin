@@ -3,8 +3,17 @@ import session from "express-session";
 import bodyParser from "body-parser";
 import route from "./routes/route.js";
 import ejsMate from "ejs-mate";
+import cors from "cors";
 
 const app = express();
+
+// 配置 CORS
+app.use(cors({
+    origin: '*', // 允许所有来源，生产环境建议指定具体域名
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
 
 app.engine("ejs", ejsMate);  // 使用 ejs-mate
 app.set("view engine", "ejs");

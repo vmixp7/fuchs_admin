@@ -68,6 +68,49 @@ const QaModel = {
                 }
             );
         });
+    },
+
+    // 獲取常見問題列表（分頁）
+    getByPage: (page = 1, limit = 10) => {
+        return new Promise((resolve, reject) => {
+            const offset = (page - 1) * limit;
+
+            // 查詢總數
+            db.query(
+                'SELECT COUNT(*) as total FROM fu_qa',
+                (countErr, countResults) => {
+                    if (countErr) {
+                        reject(countErr);
+                        return;
+                    }
+
+                    const total = countResults[0].total;
+                    const totalPages = Math.ceil(total / limit);
+
+                    // 查詢資料
+                    db.query(
+                        'SELECT * FROM fu_qa ORDER BY num ASC, id DESC LIMIT ? OFFSET ?',
+                        [limit, offset],
+                        (err, results) => {
+                            if (err) {
+                                reject(err);
+                                return;
+                            }
+
+                            resolve({
+                                data: results,
+                                pagination: {
+                                    currentPage: parseInt(page),
+                                    totalPages: totalPages,
+                                    totalItems: total,
+                                    itemsPerPage: parseInt(limit)
+                                }
+                            });
+                        }
+                    );
+                }
+            );
+        });
     }
 };
 

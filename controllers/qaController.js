@@ -1,11 +1,21 @@
 import QaModel from "../models/qaModel.js";
 
 const QaController = {
-    // 獲取所有常見問題
+    // 獲取所有常見問題（支持分頁）
     getAll: async (req, res) => {
         try {
-            const qas = await QaModel.getAll();
-            res.json(qas);
+            const page = parseInt(req.query.page);
+            const limit = parseInt(req.query.limit);
+
+            // 如果有分頁參數，使用分頁查詢
+            if (page && limit) {
+                const result = await QaModel.getByPage(page, limit);
+                res.json(result);
+            } else {
+                // 否則返回所有資料
+                const qas = await QaModel.getAll();
+                res.json(qas);
+            }
         } catch (error) {
             console.error("獲取常見問題失敗:", error);
             res.status(500).json({ message: "獲取常見問題失敗" });

@@ -3,11 +3,22 @@ import fs from "fs";
 import path from "path";
 
 const PromotionController = {
-    // 获取所有促销信息
+    // 获取所有促销信息（支持分页）
     getAll: async (req, res) => {
         try {
-            const promotions = await PromotionModel.getAll();
-            res.json(promotions);
+            // 获取分页参数
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+
+            // 如果有分页参数，返回分页数据
+            if (req.query.page || req.query.limit) {
+                const result = await PromotionModel.getPaginated(page, limit);
+                res.json(result);
+            } else {
+                // 否则返回所有数据（向下兼容）
+                const promotions = await PromotionModel.getAll();
+                res.json(promotions);
+            }
         } catch (error) {
             console.error("获取促销信息失败:", error);
             res.status(500).json({ message: "获取促销信息失败" });

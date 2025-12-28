@@ -25,12 +25,17 @@ const CompanyActivityModel = {
                                 return;
                             }
 
+                            const total = countResults[0].total;
+                            const totalPages = Math.ceil(total / limit);
+
                             resolve({
                                 data: results,
-                                total: countResults[0].total,
-                                page: parseInt(page),
-                                limit: parseInt(limit),
-                                totalPages: Math.ceil(countResults[0].total / limit)
+                                pagination: {
+                                    currentPage: parseInt(page),
+                                    totalPages: totalPages,
+                                    totalItems: total,
+                                    itemsPerPage: parseInt(limit)
+                                }
                             });
                         }
                     );
