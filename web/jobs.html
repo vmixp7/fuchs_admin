@@ -426,13 +426,13 @@
             <!-- 2 -->
             <section class="info-content contact-cont">
                 <div class="mbox">
-                    <div class="text">
-                        <h4>徵才說明2</h4>
+                    <div class="text jobs_content1">
+                        <h4><strong>徵才說明</strong></h4>
                         <p>林口興業為台塑潤滑油所授權的經銷商，憑藉著優質的專業能力與服務熱忱，得以在競爭的潤滑油市場上占有一席之地。而為了將好的產品與服務可以分享給更多的客戶群，我們需要更多的優質生力軍加入我們的專業銷售團隊，竭誠歡迎您來與我們一起努力。
                         </p>
                     </div>
-                    <div class="text">
-                        <h4>工作說明及福利</h4>
+                    <div class="text jobs_content2">
+                        <h4><strong>工作說明及福利</strong></h4>
                         <p class="c">工作性質：業務專員/工程師<br>
                             上班地點：新北市/台中市/高雄市<br>
                             上班時間：8:00~17:30<br>
@@ -442,40 +442,38 @@
                             薪資：面談(意者請填履歷回傳)</p>
                     </div>
 
-                    <h2>履歷回傳</h2>
-                    <form id="form-job" onsubmit="return validateForm()">
+                    <h2>履歷回傳<span class="must">(★)欄位必填</span></h2>
+                    <form id="form-job">
                         <fieldset>
-                            <label for="name">姓名</label>
+                            <label for="name"><span class="start">★</span>姓名</label>
                             <div class="fillin">
-                                <input id="name" name="jobs[]" type="text" class="fildform error">
-                                <span class="s-text-note">尚未填寫</span>
+                                <input id="name" name="jobs[]" type="text" class="fildform" required>
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="sex">性別</label>
+                            <label for="sex"><span class="start">★</span>性別</label>
                             <div class="fillin flex">
-                                <input name="sex" type="radio" value="男">男
+                                <input name="sex" type="radio" value="男" required>男
                                 <input name="sex" type="radio" value="女">女
-                                <span class="s-text-note">請選取性別</span>
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="email">住家電話</label>
+                            <label for="homePhone">住家電話</label>
                             <div class="fillin">
-                                <input id="email" name="jobs[]" type="text" class="fildform">
+                                <input id="homePhone" name="jobs[]" type="text" class="fildform">
                             </div>
                         </fieldset>
 
                         <fieldset>
-                            <label for="phone">手機</label>
+                            <label for="phone"><span class="start">★</span>手機</label>
                             <div class="fillin">
-                                <input id="phone" name="jobs[]" type="text" class="fildform">
+                                <input id="phone" name="jobs[]" type="text" class="fildform" required>
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="datepicker">出生日期</label>
+                            <label for="birthday">出生日期</label>
                             <div class="fillin">
-                                <input class="datepicker hasDatepicker" name="jobs[]" type="date" id="dp1765262239889">
+                                <input class="datepicker hasDatepicker" name="jobs[]" type="date" id="birthday">
                             </div>
                         </fieldset>
                         <fieldset>
@@ -485,21 +483,21 @@
                             </div>
                         </fieldset>
                         <fieldset class="w100">
-                            <label for="mail">E-mail</label>
+                            <label for="email"><span class="start">★</span>E-mail</label>
                             <div class="fillin">
-                                <input id="mail" name="ask_price[]" type="text" class="fildform">
+                                <input id="email" name="ask_price[]" type="text" class="fildform" required>
                             </div>
                         </fieldset>
                         <fieldset class="w100">
-                            <label for="addr">住址</label>
+                            <label for="address">住址</label>
                             <div class="fillin">
-                                <input id="addr" name="ask_price[]" type="text" class="fildform">
+                                <input id="address" name="ask_price[]" type="text" class="fildform">
                             </div>
                         </fieldset>
                         <fieldset class="w100">
-                            <label for="name">前工作單位</label>
+                            <label for="company">前工作單位</label>
                             <div class="fillin">
-                                <input id="name" name="jobs[]" type="text" class="fildform">
+                                <input id="company" name="jobs[]" type="text" class="fildform">
                             </div>
                         </fieldset>
                         <fieldset class="w100">
@@ -511,15 +509,15 @@
                         <fieldset class="w100">
                             <label for="">任職期間：</label>
                             <div class="fillin flex">
-                                <input class="datepicker " name="" type="date" id="">
+                                <input class="datepicker" name="" type="date" id="startDate">
                                 到
-                                <input class="datepicker " name="" type="date" id="">
+                                <input class="datepicker" name="" type="date" id="endDate">
                             </div>
                         </fieldset>
                         <fieldset class="w100">
-                            <label for="note">自傳</label>
+                            <label for="autobiography">自傳</label>
                             <div class="fillin">
-                                <textarea id="note" name="jobs[]" class="fildform" rows="5"></textarea>
+                                <textarea id="autobiography" name="jobs[]" class="fildform" rows="5"></textarea>
                             </div>
                         </fieldset>
                         <div class="bottom-btn" id="job_send">
@@ -567,28 +565,60 @@
         },
     });
 
-    function validateForm() {
-        // 取得所有需要驗證的欄位
-        const fields = document.querySelectorAll('#form-job input[type="text"], #form-job input[type="email"], #form-job textarea');
-        let firstEmptyField = null;
-
-        // 遍歷所有欄位，尋找第一個未填寫的
-        for (let i = 0; i < fields.length; i++) {
-            const field = fields[i];
-            if (field.value.trim() === '') { // 檢查是否為空 (去除前後空格)
-                firstEmptyField = field;
-                break; // 找到第一個就停止
+    // 取得 contents 資料
+    $(document).ready(function() {
+        $.ajax({
+            url: BASE_URL + '/api/contents',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                const jobsDatas = data.filter(item => item.item === 'jobs');
+                const jobsData = jobsDatas[0];
+                console.log('Jobs 資料:', jobsData);
+                $('.jobs_content1 p').html(jobsData.content1);
+                $('.jobs_content2 p').html(jobsData.content2);
+            },
+            error: function(xhr, status, error) {
+                console.error('取得 contents 失敗:', error);
             }
-        }
+        });
 
-        if (firstEmptyField) {
-            alert("請填寫欄位！"); // 提示使用者
-            firstEmptyField.focus(); // 將游標移到未填寫的欄位
+        // 表單送出
+        $('#form-job').on('submit', function(e) {
+            e.preventDefault();
 
-            return false; // 阻止表單送出
-        } else {
-            alert("表單已填寫完整，正在送出...");
-            return true; // 允許表單送出
-        }
-    }
+            const formData = {
+                name: $('#name').val(),
+                sex: $('input[name="sex"]:checked').val(),
+                homePhone: $('#homePhone').val(),
+                phone: $('#phone').val(),
+                birthday: $('#birthday').val(),
+                school: $('#school').val(),
+                email: $('#email').val(),
+                address: $('#address').val(),
+                company: $('#company').val(),
+                title: $('#title').val(),
+                startDate: $('#startDate').val(),
+                endDate: $('#endDate').val(),
+                autobiography: $('#autobiography').val()
+            };
+
+            console.log('formData--', formData);
+
+            $.ajax({
+                url: BASE_URL + '/api/send-email/jobs',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    alert('履歷已送出成功！');
+                    $('#form-job')[0].reset();
+                },
+                error: function(xhr, status, error) {
+                    console.error('送出失敗:', error);
+                    alert('送出失敗，請稍後再試');
+                }
+            });
+        });
+    });
 </script>

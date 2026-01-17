@@ -427,77 +427,72 @@
             <!-- 2 -->
             <section class="info-content contact-cont">
                 <div class="mbox">
-                    <h2>線上詢價<span class="must">(★)欄位必填</span></h2>
-                    <form id="form-content1" onsubmit="return validateForm1()">
+                    <h2><strong>線上詢價</strong><span class="must">(★)欄位必填</span></h2>
+                    <form id="form-inquiry">
                         <fieldset>
-                            <label for="name"><span class="start">★</span>姓名</label>
+                            <label for="inq_name"><span class="start">★</span>姓名</label>
                             <div class="fillin">
-                                <input id="name" name="ask_price[]" type="text" class="fildform error">
-                                <span class="s-text-note">必填欄位</span>
+                                <input id="inq_name" name="ask_price[]" type="text" class="fildform" required>
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="tel"><span class="start">★</span>聯絡電話</label>
+                            <label for="inq_tel"><span class="start">★</span>聯絡電話</label>
                             <div class="fillin">
-                                <input id="tel" name="ask_price[]" type="text" class="fildform error">
-                                <span class="s-text-note">必填欄位</span>
+                                <input id="inq_tel" name="ask_price[]" type="text" class="fildform" required>
                             </div>
                         </fieldset>
                         <fieldset class="w100">
-                            <label for="mail">E-mail</label>
+                            <label for="inq_mail">E-mail</label>
                             <div class="fillin">
-                                <input id="mail" name="ask_price[]" type="text" class="fildform">
+                                <input id="inq_mail" name="ask_price[]" type="text" class="fildform">
                             </div>
                         </fieldset>
                         <fieldset class="w100">
-                            <label for="addr">住址</label>
+                            <label for="inq_addr">住址</label>
                             <div class="fillin">
-                                <input id="addr" name="ask_price[]" type="text" class="fildform">
+                                <input id="inq_addr" name="ask_price[]" type="text" class="fildform">
                             </div>
                         </fieldset>
                         <fieldset class="w100">
-                            <label for="com">任職公司</label>
+                            <label for="inq_com">任職公司</label>
                             <div class="fillin">
-                                <input id="com" name="ask_price[]" type="text" class="fildform">
+                                <input id="inq_com" name="ask_price[]" type="text" class="fildform">
                             </div>
                         </fieldset>
                         <fieldset class="w100">
-                            <label for="title">職稱</label>
+                            <label for="inq_title">職稱</label>
                             <div class="fillin">
-                                <input id="title" name="ask_price[]" type="text" class="fildform">
+                                <input id="inq_title" name="ask_price[]" type="text" class="fildform">
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="device">設備名稱</label>
+                            <label for="inq_device">設備名稱</label>
                             <div class="fillin">
-                                <input id="device" name="ask_price[]" type="text" class="fildform">
+                                <input id="inq_device" name="ask_price[]" type="text" class="fildform">
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="position"><span class="start">★</span>需求潤滑部位</label>
+                            <label for="inq_position"><span class="start">★</span>需求潤滑部位</label>
                             <div class="fillin">
-                                <input id="position" name="ask_price[]" type="text" class="fildform error">
-                                <span class="s-text-note">必填欄位</span>
+                                <input id="inq_position" name="ask_price[]" type="text" class="fildform" required>
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="usepro"><span class="start">★</span>目前採用產品</label>
+                            <label for="inq_usepro"><span class="start">★</span>目前採用產品</label>
                             <div class="fillin">
-                                <input id="usepro" name="ask_price[]" type="text" class="fildform error">
-                                <span class="s-text-note">必填欄位</span>
+                                <input id="inq_usepro" name="ask_price[]" type="text" class="fildform" required>
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="quantity"><span class="start">★</span>需求數量(公升)</label>
+                            <label for="inq_quantity"><span class="start">★</span>需求數量(公升)</label>
                             <div class="fillin">
-                                <input id="quantity" name="ask_price[]" type="text" class="fildform error">
-                                <span class="s-text-note">必填欄位</span>
+                                <input id="inq_quantity" name="ask_price[]" type="text" class="fildform" required>
                             </div>
                         </fieldset>
                         <fieldset class="w100">
-                            <label for="question">其它問題或說明</label>
+                            <label for="inq_question">其它問題或說明</label>
                             <div class="fillin">
-                                <textarea id="question" name="ask_price[]" class="fildform" rows="5"></textarea>
+                                <textarea id="inq_question" name="ask_price[]" class="fildform" rows="5"></textarea>
                             </div>
 
                         </fieldset>
@@ -507,26 +502,24 @@
                         </div>
 
                     </form>
-                    <h2>聯絡我們<span class="must">(★)欄位必填</span></h2>
-                    <form id="form-content2" onsubmit="return validateForm2()">
+                    <h2><strong>聯絡我們</strong><span class="must">(★)欄位必填</span></h2>
+                    <form id="form-contactus">
                         <fieldset>
-                            <label for="name"><span class="start">★</span>姓名</label>
+                            <label for="contact_name"><span class="start">★</span>姓名</label>
                             <div class="fillin">
-                                <input id="name" name="contact[]" type="text" class="fildform error">
-                                <span class="s-text-note">必填欄位</span>
+                                <input id="contact_name" name="contact[]" type="text" class="fildform" required>
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="tel"><span class="start">★</span>聯絡電話</label>
+                            <label for="contact_tel"><span class="start">★</span>聯絡電話</label>
                             <div class="fillin">
-                                <input id="tel" name="contact[]" type="text" class="fildform error">
-                                <span class="s-text-note">必填欄位</span>
+                                <input id="contact_tel" name="contact[]" type="text" class="fildform" required>
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="area"><span class="start">★</span>住區</label>
+                            <label for="contact_area"><span class="start">★</span>住區</label>
                             <div class="fillin">
-                                <select class="error">
+                                <select id="contact_area" class="" required>
                                     <option value="">請選擇縣市</option>
                                     <option>基隆市</option>
                                     <option>台北市</option>
@@ -551,36 +544,34 @@
                                     <option>金門縣</option>
                                     <option>連江縣</option>
                                 </select>
-                                <span class="s-text-note">必選欄位</span>
                             </div>
                         </fieldset>
                         <fieldset>
-                            <label for="mail">E-mail</label>
+                            <label for="contact_mail">E-mail</label>
                             <div class="fillin">
-                                <input id="mail" name="contact[]" type="text" class="fildform">
+                                <input id="contact_mail" name="contact[]" type="text" class="fildform">
                             </div>
                         </fieldset>
 
 
                         <fieldset class="w100">
-                            <label for="com">任職公司</label>
+                            <label for="contact_com">任職公司</label>
                             <div class="fillin">
-                                <input id="com" name="ask_price[]" type="text" class="fildform">
+                                <input id="contact_com" name="ask_price[]" type="text" class="fildform">
                             </div>
                         </fieldset>
                         <fieldset class="w100">
-                            <label for="title">職稱</label>
+                            <label for="contact_title">職稱</label>
                             <div class="fillin">
-                                <input id="title" name="ask_price[]" type="text" class="fildform">
+                                <input id="contact_title" name="ask_price[]" type="text" class="fildform">
                             </div>
                         </fieldset>
 
                         <fieldset class="w100">
-                            <label for="question"><span class="start">★</span>問題或建議</label>
+                            <label for="contact_question"><span class="start">★</span>問題或建議</label>
                             <div class="fillin">
-                                <textarea id="question" name="contact[]" class="fildform error" cols="32"
-                                    rows="5"></textarea>
-                                <span class="s-text-note">必填欄位</span>
+                                <textarea id="contact_question" name="contact[]" class="fildform" cols="32"
+                                    rows="5" required></textarea>
                             </div>
                         </fieldset>
                         <div class="bottom-btn" id="job_send">
@@ -629,53 +620,69 @@
         },
     });
 
-    function validateForm1() {
-        // 取得所有需要驗證的欄位
-        const fields = document.querySelectorAll('#form-content1 input[type="text"], #form-content1 input[type="email"], #form-content1 textarea');
-        let firstEmptyField = null;
+    // 線上詢價表單送出
+    $('#form-inquiry').on('submit', function(e) {
+        e.preventDefault();
 
-        // 遍歷所有欄位，尋找第一個未填寫的
-        for (let i = 0; i < fields.length; i++) {
-            const field = fields[i];
-            if (field.value.trim() === '') { // 檢查是否為空 (去除前後空格)
-                firstEmptyField = field;
-                break; // 找到第一個就停止
+        const formData = {
+            name: $('#inq_name').val(),
+            tel: $('#inq_tel').val(),
+            email: $('#inq_mail').val(),
+            address: $('#inq_addr').val(),
+            company: $('#inq_com').val(),
+            title: $('#inq_title').val(),
+            device: $('#inq_device').val(),
+            position: $('#inq_position').val(),
+            usepro: $('#inq_usepro').val(),
+            quantity: $('#inq_quantity').val(),
+            question: $('#inq_question').val()
+        };
+
+        console.log('formData--', formData);
+        $.ajax({
+            url: BASE_URL + '/api/send-email/inquiry',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                alert('詢價已送出成功！');
+                $('#form-inquiry')[0].reset();
+            },
+            error: function(xhr, status, error) {
+                console.error('送出失敗:', error);
+                alert('送出失敗，請稍後再試');
             }
-        }
+        });
+    });
 
-        if (firstEmptyField) {
-            alert("請填寫欄位！"); // 提示使用者
-            firstEmptyField.focus(); // 將游標移到未填寫的欄位
+    // 聯絡我們表單送出
+    $('#form-contactus').on('submit', function(e) {
+        e.preventDefault();
 
-            return false; // 阻止表單送出
-        } else {
-            alert("表單已填寫完整，正在送出...");
-            return true; // 允許表單送出
-        }
-    }
+        const formData = {
+            name: $('#contact_name').val(),
+            tel: $('#contact_tel').val(),
+            area: $('#contact_area').val(),
+            email: $('#contact_mail').val(),
+            company: $('#contact_com').val(),
+            title: $('#contact_title').val(),
+            question: $('#contact_question').val()
+        };
 
-    function validateForm2() {
-        // 取得所有需要驗證的欄位
-        const fields = document.querySelectorAll('#form-content2 input[type="text"], #form-content2 input[type="email"], #form-content2 textarea');
-        let firstEmptyField = null;
-
-        // 遍歷所有欄位，尋找第一個未填寫的
-        for (let i = 0; i < fields.length; i++) {
-            const field = fields[i];
-            if (field.value.trim() === '') { // 檢查是否為空 (去除前後空格)
-                firstEmptyField = field;
-                break; // 找到第一個就停止
+        console.log('formData--', formData);
+        $.ajax({
+            url: BASE_URL + '/api/send-email/contactus',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                alert('訊息已送出成功！');
+                $('#form-contactus')[0].reset();
+            },
+            error: function(xhr, status, error) {
+                console.error('送出失敗:', error);
+                alert('送出失敗，請稍後再試');
             }
-        }
-
-        if (firstEmptyField) {
-            alert("請填寫欄位！"); // 提示使用者
-            firstEmptyField.focus(); // 將游標移到未填寫的欄位
-
-            return false; // 阻止表單送出
-        } else {
-            alert("表單已填寫完整，正在送出...");
-            return true; // 允許表單送出
-        }
-    }
+        });
+    });
 </script>
