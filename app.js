@@ -8,14 +8,20 @@ import cors from "cors";
 const app = express();
 
 // 配置 CORS
-app.use(cors({
-    origin: '*', // 允许所有来源，生产环境建议指定具体域名
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost",
+      "http://localhost:80",
+      "http://fuchslube.com.tw",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+);
 
-app.engine("ejs", ejsMate);  // 使用 ejs-mate
+app.engine("ejs", ejsMate); // 使用 ejs-mate
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.json());
@@ -23,13 +29,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
-    session({
-        secret: "mysecret",
-        resave: false,
-        saveUninitialized: false,
-    })
+  session({
+    secret: "mysecret",
+    resave: false,
+    saveUninitialized: false,
+  }),
 );
 
 app.use("/", route);
 
-app.listen(5000, () => console.log("🚀 Server running at http://localhost:5000"));
+app.listen(5000, () =>
+  console.log("🚀 Server running at http://localhost:5000"),
+);
