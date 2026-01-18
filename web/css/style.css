@@ -297,6 +297,10 @@ html {
   color: #f8d304;
 }
 
+.megamenu a {
+  color: #374649;
+}
+
 @media (max-width: 1100px) {
   .lineQrcode {
     width: 100px;
