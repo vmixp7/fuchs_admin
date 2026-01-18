@@ -10,8 +10,8 @@ const app = express();
 // 配置 CORS
 app.use(
   cors({
-    origin: ["http://fuchslube.com.tw"],
-    // origin: "*",
+    // origin: ["http://fuchslube.com.tw"],
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
