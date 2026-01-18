@@ -1,3 +1,11 @@
+const bannerTexts = [
+  "德國福斯FUCHS<br>先進科技<span>金屬加工潤滑油</span>",
+  "德國福斯FUCHS<br>超高性能<span>工程機具潤滑油</span>",
+  "德國福斯FUCHS<br>全球獨創<span>XTL 極限潤滑科技</span>",
+  "德國福斯FUCHS<br>眾多認證<span>農機專用潤滑油</span>",
+  "德國福斯FUCHS<br>原廠推薦<span>商用重車潤滑油</span>",
+];
+
 const menuData = {
   products: {
     title: "產品",
@@ -312,6 +320,15 @@ $(document).ready(function () {
 
   // 載入選單資料
   loadMenuData();
+
+  // 載入產品頁面的 megamenu
+  buildProductMegamenu();
+
+  // 載入行業頁面的 megamenu
+  buildIndustriesMegamenu();
+
+  // 載入品牌故事頁面的 megamenu
+  buildBrandsMegamenu();
 });
 
 // 從 JSON 檔案載入選單資料
@@ -357,6 +374,75 @@ function buildMenu(selector, menuData) {
   });
 
   html += "</div></div></li>";
+
+  $container.html(html);
+}
+
+// 建立行業頁面的 megamenu
+function buildIndustriesMegamenu() {
+  var $container = $("#industries-megamenu");
+  if ($container.length === 0 || !menuData.industries) return;
+
+  var html = "";
+
+  menuData.industries.sections.forEach(function (section) {
+    html += "<h4><span>" + section.title + "</span></h4>";
+
+    section.items.forEach(function (item) {
+      html +=
+        '<p><a href="' +
+        item.url +
+        '" target="_blank">' +
+        item.name +
+        "</a></p>";
+    });
+  });
+
+  $container.html(html);
+}
+
+// 建立品牌故事頁面的 megamenu
+function buildBrandsMegamenu() {
+  var $container = $("#brands-megamenu");
+  if ($container.length === 0 || !menuData.brands) return;
+
+  var html = "";
+
+  menuData.brands.sections.forEach(function (section) {
+    html += "<h4><span>" + section.title + "</span></h4>";
+
+    section.items.forEach(function (item) {
+      html +=
+        '<p><a href="' +
+        item.url +
+        '" target="_blank">' +
+        item.name +
+        "</a></p>";
+    });
+  });
+
+  $container.html(html);
+}
+
+// 建立產品頁面的 megamenu
+function buildProductMegamenu() {
+  var $container = $("#product-megamenu");
+  if ($container.length === 0 || !menuData.products) return;
+
+  var html = "";
+
+  menuData.products.sections.forEach(function (section) {
+    html += "<h4><span>" + section.title + "</span></h4>";
+
+    section.items.forEach(function (item) {
+      html +=
+        '<p><a href="' +
+        item.url +
+        '" target="_blank">' +
+        item.name +
+        "</a></p>";
+    });
+  });
 
   $container.html(html);
 }

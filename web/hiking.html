@@ -6,12 +6,10 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>
-      台塑FORMOSA &amp; 福斯FUCHS潤滑油授權經銷商 - 林口興業有限公司
-    </title>
+    <title>林口興業有限公司：德國福斯FUCHS潤滑油授權經銷商</title>
     <meta
       name="keywords"
-      content="台塑潤滑油,formosa,formosalube,oil,lube,fuchs,林口興業,機油,潤滑油,汽車,機車,重車,工業,海運"
+      content="福斯潤滑油,oil,lube,fuchs,林口興業,機油,潤滑油,汽車,機車,重車,工業,海運"
     />
     <meta
       name="description"
@@ -19,7 +17,7 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="#" />
-    <link rel="stylesheet" href="css/style.css?v=8" />
+    <link rel="stylesheet" href="css/style.css?v=10" />
     <!-- Pushy -->
     <link rel="stylesheet" href="mobilemenu/pushy.css" />
     <!-- Link Swiper's CSS -->
@@ -34,6 +32,47 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css"
     />
+    <style>
+      /* 自定義 PDF 燈箱 */
+      .pdf-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+      }
+      .pdf-modal-overlay.active {
+        display: flex;
+      }
+      .pdf-modal-content {
+        position: relative;
+        width: 800px;
+        height: 600px;
+        max-width: 90vw;
+        max-height: 80vh;
+        background: #fff;
+      }
+      .pdf-modal-content iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .pdf-modal-close {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        color: #fff;
+        font-size: 30px;
+        cursor: pointer;
+        background: none;
+        border: none;
+      }
+    </style>
   </head>
 
   <body>
@@ -84,7 +123,7 @@
                   alt="林口興業 台塑潤滑油"
                 />
               </a>
-              <p class="slogan">Your trusted partner<br />值得信賴的好夥伴</p>
+              <p class="slogan">Your trusted partner<br />值得您信賴的好伙伴</p>
             </div>
             <!-- Menu start-->
             <nav class="menu-item navbar navbar-expand-md static-nav">
@@ -168,6 +207,9 @@
           <div class="mbox">
             <!-- Swiper -->
             <div class="swiper-cont">
+              <div class="banner-text-block">
+                <h2></h2>
+              </div>
               <div class="swiper mySwiper">
                 <div class="swiper-pagination"></div>
                 <div class="swiper-wrapper">
@@ -246,19 +288,35 @@
       </footer>
     </div>
 
+    <!-- PDF 燈箱 -->
+    <div id="pdf-modal" class="pdf-modal-overlay">
+      <div class="pdf-modal-content">
+        <button class="pdf-modal-close">&times;</button>
+        <iframe src=""></iframe>
+      </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="mobilemenu/pushy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="js/menu.js?v=1.5"></script>
-    <script src="js/script.js?v=1"></script>
+    <script src="js/menu.js?v=10"></script>
+    <script src="js/script.js?v=10"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
     <!-- Initialize Swiper -->
     <script>
+      var bannerTextTimer;
+      function updateBannerText(index) {
+        var realIndex = index % bannerTexts.length;
+        $(".banner-text-block h2").html(bannerTexts[realIndex]);
+      }
       var swiper = new Swiper(".mySwiper", {
         effect: "fade",
         crossFade: true,
         loop: true,
-        autoplay: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
@@ -266,6 +324,31 @@
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
+        },
+        on: {
+          slideChangeTransitionStart: function () {
+            // 切換時隱藏文字
+            clearTimeout(bannerTextTimer);
+            $(".banner-text-block").removeClass("show");
+          },
+          slideChangeTransitionEnd: function () {
+            var self = this;
+            // 更新文字內容
+            updateBannerText(self.realIndex);
+            // 停頓1秒後顯示文字
+            bannerTextTimer = setTimeout(function () {
+              $(".banner-text-block").addClass("show");
+            }, 1000);
+          },
+          init: function () {
+            var self = this;
+            // 初始化時設定文字
+            updateBannerText(self.realIndex);
+            // 1秒後顯示文字
+            bannerTextTimer = setTimeout(function () {
+              $(".banner-text-block").addClass("show");
+            }, 1000);
+          },
         },
       });
 
@@ -293,7 +376,7 @@
                     <p>
                       ${item.intro}
                     </p>
-                    <a href="${strokeUrl}" class="hiking_pdf"
+                    <a href="javascript:void(0)" class="hiking_pdf" data-pdf="${strokeUrl}"
                       >(預訂行程,請參閱)</a
                     >
                     <a href="hiking_sub.html?type=${item.id}" class="hiking_detail"
@@ -306,6 +389,14 @@
             });
 
             $("#hiking_block").html(promotionHtml);
+
+            // 綁定 PDF 燈箱點擊事件
+            $(".hiking_pdf").on("click", function (e) {
+              e.preventDefault();
+              var pdfUrl = $(this).data("pdf");
+              $("#pdf-modal iframe").attr("src", pdfUrl);
+              $("#pdf-modal").addClass("active");
+            });
           },
           error: function (xhr, status, error) {
             console.error("載入登山活動失敗:", error);
@@ -316,6 +407,14 @@
       // Load initial data when page loads
       $(document).ready(function () {
         loadHiking();
+
+        // 關閉 PDF 燈箱
+        $(".pdf-modal-close, .pdf-modal-overlay").on("click", function (e) {
+          if (e.target === this) {
+            $("#pdf-modal").removeClass("active");
+            $("#pdf-modal iframe").attr("src", "");
+          }
+        });
       });
     </script>
   </body>

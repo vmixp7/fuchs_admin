@@ -6,12 +6,10 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>
-      台塑FORMOSA &amp; 福斯FUCHS潤滑油授權經銷商 - 林口興業有限公司
-    </title>
+    <title>林口興業有限公司：德國福斯FUCHS潤滑油授權經銷商</title>
     <meta
       name="keywords"
-      content="台塑潤滑油,formosa,formosalube,oil,lube,fuchs,林口興業,機油,潤滑油,汽車,機車,重車,工業,海運"
+      content="福斯潤滑油,oil,lube,fuchs,林口興業,機油,潤滑油,汽車,機車,重車,工業,海運"
     />
     <meta
       name="description"
@@ -19,7 +17,7 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="#" />
-    <link rel="stylesheet" href="css/style.css?v=8" />
+    <link rel="stylesheet" href="css/style.css?v=10" />
     <!-- Pushy -->
     <link rel="stylesheet" href="mobilemenu/pushy.css" />
     <!-- Link Swiper's CSS -->
@@ -76,7 +74,7 @@
                   alt="林口興業 台塑潤滑油"
                 />
               </a>
-              <p class="slogan">Your trusted partner<br />值得信賴的好夥伴</p>
+              <p class="slogan">Your trusted partner<br />值得您信賴的好伙伴</p>
             </div>
             <nav class="menu-item">
               <ul>
@@ -107,49 +105,9 @@
       </header>
 
       <!-- main -->
-      <!-- <iframe class="brands-iframe" src="https://www.fuchs.com/sea/tw/brands/" frameborder="0"  sandbox="allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts"></iframe> -->
       <div class="megamenu">
-        <div class="left-item">
-          <!-- <h3>行業資訊</h3> -->
-          <h4><span>A - K</span></h4>
-          <p class="tab-button active" data-tab="tab-a1">AGRIFARM</p>
-          <p class="tab-button" data-tab="tab-a2">ANTICORIT</p>
-          <p class="tab-button" data-tab="tab-a3">CARBAFLO</p>
-          <p class="tab-button" data-tab="tab-a4">CASSIDA</p>
-          <p class="tab-button" data-tab="tab-a5">CEPLATTYN</p>
-          <p class="tab-button" data-tab="tab-a6">CHEMPLEX</p>
-          <p class="tab-button" data-tab="tab-a7">ECOCOOL</p>
-          <p class="tab-button" data-tab="tab-a8">ECOCUT</p>
-          <p class="tab-button" data-tab="tab-a9">GEARMASTER</p>
-          <p class="tab-button" data-tab="tab-a10">GLEITMO</p>
-
-          <h4><span>L - R</span></h4>
-          <p class="tab-button" data-tab="tab-b1">LAGERMEISTER</p>
-          <p class="tab-button" data-tab="tab-b2">LOCOLUB</p>
-          <p class="tab-button" data-tab="tab-b3">LUBRODAL</p>
-          <p class="tab-button" data-tab="tab-b4">MAINTAIN</p>
-          <p class="tab-button" data-tab="tab-b5">MOLYPAUL</p>
-          <p class="tab-button" data-tab="tab-b6">PENTOSIN</p>
-          <p class="tab-button" data-tab="tab-b7">PLANTO</p>
-          <p class="tab-button" data-tab="tab-b8">RENEP</p>
-          <p class="tab-button" data-tab="tab-b9">RENISO</p>
-          <p class="tab-button" data-tab="tab-b10">RENOCLEAN</p>
-          <p class="tab-button" data-tab="tab-b11">RENOFORM</p>
-          <p class="tab-button" data-tab="tab-b12">RENOLIN</p>
-          <p class="tab-button" data-tab="tab-b13">RENOLIT</p>
-
-          <h4><span>S - Z</span></h4>
-          <p class="tab-button" data-tab="tab-c1">SILKOLENE</p>
-          <p class="tab-button" data-tab="tab-c2">SOK</p>
-          <p class="tab-button" data-tab="tab-c3">SOLCENIC</p>
-          <p class="tab-button" data-tab="tab-c4">STABY</p>
-          <p class="tab-button" data-tab="tab-c5">STABYLAN</p>
-          <p class="tab-button" data-tab="tab-c6">THERMISOL</p>
-          <p class="tab-button" data-tab="tab-c7">TITAN</p>
-          <p class="tab-button" data-tab="tab-c8">TRENOIL</p>
-          <p class="tab-button" data-tab="tab-c9">URETHYN</p>
-          <p class="tab-button" data-tab="tab-c10">VITROLIS</p>
-          <p class="tab-button" data-tab="tab-c11">WISURA</p>
+        <div class="left-item" id="brands-megamenu">
+          <!-- 由 menu.js 動態生成 -->
         </div>
       </div>
 
@@ -173,17 +131,25 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="mobilemenu/pushy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="js/menu.js?v=1.5"></script>
-    <script src="js/script.js?v=1"></script>
+    <script src="js/menu.js?v=10"></script>
+    <script src="js/script.js?v=10"></script>
   </body>
 </html>
 <!-- Initialize Swiper -->
 <script>
+  var bannerTextTimer;
+  function updateBannerText(index) {
+    var realIndex = index % bannerTexts.length;
+    $(".banner-text-block h2").html(bannerTexts[realIndex]);
+  }
   var swiper = new Swiper(".mySwiper", {
     effect: "fade",
     crossFade: true,
     loop: true,
-    autoplay: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
     pagination: {
       el: ".swiper-pagination",
       clickable: true,
@@ -191,6 +157,31 @@
     navigation: {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
+    },
+    on: {
+      slideChangeTransitionStart: function () {
+        // 切換時隱藏文字
+        clearTimeout(bannerTextTimer);
+        $(".banner-text-block").removeClass("show");
+      },
+      slideChangeTransitionEnd: function () {
+        var self = this;
+        // 更新文字內容
+        updateBannerText(self.realIndex);
+        // 停頓1秒後顯示文字
+        bannerTextTimer = setTimeout(function () {
+          $(".banner-text-block").addClass("show");
+        }, 1000);
+      },
+      init: function () {
+        var self = this;
+        // 初始化時設定文字
+        updateBannerText(self.realIndex);
+        // 1秒後顯示文字
+        bannerTextTimer = setTimeout(function () {
+          $(".banner-text-block").addClass("show");
+        }, 1000);
+      },
     },
   });
 </script>
