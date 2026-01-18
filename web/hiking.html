@@ -221,17 +221,9 @@
         <section class="info-content album-cont">
           <div class="mbox">
             <div class="text">
-              <h4>公司相關活動</h4>
+              <h4>客戶互動訊息</h4>
             </div>
-            <div class="album-list" id="company-activity-list">
-              <!-- Dynamic content will be loaded here -->
-            </div>
-            <div
-              class="pagination-container"
-              style="display: flex; justify-content: flex-end; margin-top: 20px"
-            >
-              <div id="pagination"></div>
-            </div>
+            <div id="hiking_block"></div>
           </div>
         </section>
       </main>
@@ -277,171 +269,53 @@
         },
       });
 
-      Fancybox.bind("[data-fancybox]", {
-        // Your custom options
-      });
-
-      // Company Activity pagination functionality
-      var currentPage = 1;
-      var totalPages = 1;
-
-      // Load company activities
-      function loadCompanyActivities(page = 1) {
-        currentPage = page;
-
+      function loadHiking() {
         $.ajax({
-          url: `${BASE_URL}/api/company-activities?page=${page}&limit=6`,
+          url: `${BASE_URL}/api/hiking-types`,
           type: "GET",
           dataType: "json",
           success: function (response) {
-            var activityList = $("#company-activity-list");
-            activityList.empty();
+            console.log("載入活動清單:", response);
 
-            if (response.data && response.data.length > 0) {
-              response.data.forEach(function (item, index) {
-                var galleryId = "gallery" + (index + 1);
-                var title = item.title || "";
-                var date = item.startday || "";
+            // 渲染促销信息列表
+            var promotionHtml = "";
+            response.forEach(function (item) {
+              const imgUrl = `${FORMOSA_URL}/images/hiking/${item.img}`;
+              const strokeUrl = `${FORMOSA_URL}/images/hiking/${item.stroke}`;
+              const html = `
+              <div class="album-list">
+                <div class="aSupport2" href="seminar.html">
+                  <div class="aSupport-photo hiking_photo">
+                    <img src="${imgUrl}" loading="1" alt="" />
+                  </div>
+                  <div class="hiking_text-info text-info">
+                    <h3>A-健康鬥陣行</h3>
+                    <p>
+                      ${item.intro}
+                    </p>
+                    <a href="${strokeUrl}" class="hiking_pdf"
+                      >(預訂行程,請參閱)</a
+                    >
+                    <a href="hiking_sub.html?type=${item.id}" class="hiking_detail"
+                      >活動內容</a
+                    >
+                  </div>
+                </div>
+              </div>`;
+              promotionHtml += html;
+            });
 
-                // Format date if needed (YYYYMMDD to YYYY-MM-DD)
-                if (date && date.length === 8) {
-                  date = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`;
-                }
-
-                var albumHtml = '<div class="a-album">';
-
-                // Add all images for this album (up to 20 images for company activities)
-                for (var i = 1; i <= 20; i++) {
-                  var imgNum = i.toString().padStart(2, "0");
-                  var fname = `Y${item.startday}_${imgNum}.jpg`;
-                  var imgUrl = `${FORMOSA_URL}/images/company/${fname}`;
-
-                  if (i === 1) {
-                    albumHtml += `
-                                    <a data-fancybox="${galleryId}" class="album-cover" rel="${galleryId}"
-                                        href="${imgUrl}" title="${title}">
-                                        <img src="${imgUrl}">
-                                    </a>`;
-                  } else {
-                    albumHtml += `<a data-fancybox="${galleryId}" rel="${galleryId}" href="${imgUrl}" title=""></a>`;
-                  }
-                }
-
-                albumHtml += `
-                            <figcaption>
-                                <p class="album-title">${title}</p>
-                                <p class="album-date">日期：${date}</p>
-                            </figcaption>
-                        </div>`;
-
-                activityList.append(albumHtml);
-              });
-
-              // Rebind Fancybox after dynamic content is added
-              Fancybox.bind("[data-fancybox]", {});
-
-              // Update pagination
-              if (response.pagination) {
-                totalPages = response.pagination.totalPages;
-                renderPagination();
-              }
-            } else {
-              activityList.html("<p>目前沒有公司活動資料</p>");
-            }
+            $("#hiking_block").html(promotionHtml);
           },
           error: function (xhr, status, error) {
-            console.error("載入公司活動失敗:", error);
-            $("#company-activity-list").html(
-              "<p>載入公司活動資料時發生錯誤</p>",
-            );
+            console.error("載入登山活動失敗:", error);
+            $("#hiking-list").html("<p>載入登山活動資料時發生錯誤</p>");
           },
         });
       }
-
-      // Render pagination
-      function renderPagination() {
-        if (totalPages <= 1) {
-          $("#pagination").hide();
-          return;
-        }
-
-        $("#pagination").css("display", "flex");
-        var paginationHtml = "";
-        let maxButtons = 5;
-        if (window.innerWidth <= 500) {
-          maxButtons = 2;
-        }
-
-        // 上一頁按鈕
-        if (currentPage > 1) {
-          paginationHtml +=
-            '<button onclick="loadCompanyActivities(' +
-            (currentPage - 1) +
-            ')" style="margin: 0 5px; padding: 8px 15px; border: 1px solid #3559f6; background: white; color: #3559f6; cursor: pointer; border-radius: 4px;">上一頁</button>';
-        }
-
-        var startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
-        var endPage = Math.min(totalPages, startPage + maxButtons - 1);
-
-        if (endPage - startPage + 1 < maxButtons) {
-          startPage = Math.max(1, endPage - maxButtons + 1);
-        }
-
-        // First page
-        if (startPage > 1) {
-          paginationHtml +=
-            '<button onclick="loadCompanyActivities(1)" style="margin: 0 5px; padding: 8px 15px; border: 1px solid #3559f6; background: white; color: #3559f6; cursor: pointer; border-radius: 4px;">1</button>';
-          if (startPage > 2) {
-            paginationHtml +=
-              '<span style="margin: 0 5px; padding: 8px 0;">...</span>';
-          }
-        }
-
-        // Page buttons
-        for (var i = startPage; i <= endPage; i++) {
-          if (i === currentPage) {
-            paginationHtml +=
-              '<button style="margin: 0 5px; padding: 8px 15px; border: 1px solid #3559f6; background: #3559f6; color: white; cursor: pointer; border-radius: 4px; font-weight: bold;">' +
-              i +
-              "</button>";
-          } else {
-            paginationHtml +=
-              '<button onclick="loadCompanyActivities(' +
-              i +
-              ')" style="margin: 0 5px; padding: 8px 15px; border: 1px solid #3559f6; background: white; color: #3559f6; cursor: pointer; border-radius: 4px;">' +
-              i +
-              "</button>";
-          }
-        }
-
-        // Last page
-        if (endPage < totalPages) {
-          if (endPage < totalPages - 1) {
-            paginationHtml +=
-              '<span style="margin: 0 5px; padding: 8px 0;">...</span>';
-          }
-          paginationHtml +=
-            '<button onclick="loadCompanyActivities(' +
-            totalPages +
-            ')" style="margin: 0 5px; padding: 8px 15px; border: 1px solid #3559f6; background: white; color: #3559f6; cursor: pointer; border-radius: 4px;">' +
-            totalPages +
-            "</button>";
-        }
-
-        // 下一頁按鈕
-        if (currentPage < totalPages) {
-          paginationHtml +=
-            '<button onclick="loadCompanyActivities(' +
-            (currentPage + 1) +
-            ')" style="margin: 0 5px; padding: 8px 15px; border: 1px solid #3559f6; background: white; color: #3559f6; cursor: pointer; border-radius: 4px;">下一頁</button>';
-        }
-
-        $("#pagination").html(paginationHtml);
-      }
-
       // Load initial data when page loads
       $(document).ready(function () {
-        loadCompanyActivities(1);
+        loadHiking();
       });
     </script>
   </body>
