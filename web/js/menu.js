@@ -1,9 +1,9 @@
 const bannerTexts = [
+  "德國福斯FUCHS<br>原廠推薦<span>商用重車潤滑油</span>",
   "德國福斯FUCHS<br>先進科技<span>金屬加工潤滑油</span>",
   "德國福斯FUCHS<br>超高性能<span>工程機具潤滑油</span>",
   "德國福斯FUCHS<br>全球獨創<span>XTL 極限潤滑科技</span>",
   "德國福斯FUCHS<br>眾多認證<span>農機專用潤滑油</span>",
-  "德國福斯FUCHS<br>原廠推薦<span>商用重車潤滑油</span>",
 ];
 
 const menuData = {
@@ -329,6 +329,8 @@ $(document).ready(function () {
 
   // 載入品牌故事頁面的 megamenu
   buildBrandsMegamenu();
+
+  loadBanners();
 });
 
 // 從 JSON 檔案載入選單資料
@@ -445,4 +447,98 @@ function buildProductMegamenu() {
   });
 
   $container.html(html);
+}
+
+function loadBanners() {
+  const banners = `
+      <div class="swiper-slide">
+        <img
+          src="images/photo/Shutterstock_1610700505.jpg"
+          width="100%"
+          loading="1"
+          alt=""
+        />
+      </div>
+      <div class="swiper-slide">
+        <img
+          src="images/photo/banner_2.jpg"
+          width="100%"
+          loading="1"
+          alt=""
+        />
+      </div>
+      <div class="swiper-slide">
+        <img
+          src="images/photo/Excavator bulldozer in sandpit with raised bucket over blue cloudscape sky_shutterstock_excavatorSandpit_high.jpg"
+          width="100%"
+          loading="1"
+          alt=""
+        />
+      </div>
+      <div class="swiper-slide">
+        <img
+          src="images/photo/Oilrunner_II.jpg"
+          width="100%"
+          loading="1"
+          alt=""
+        />
+      </div>
+      <div class="swiper-slide">
+        <img
+          src="images/photo/Shutterstock_684981595.jpg"
+          width="100%"
+          loading="1"
+          alt=""
+        />
+      </div>`;
+  $(".swiper-wrapper").html(banners);
+
+  // 初始化 Swiper（在 banners 載入後）
+  initSwiper();
+}
+
+function initSwiper() {
+  var bannerTextTimer;
+  function updateBannerText(index) {
+    var realIndex = index % bannerTexts.length;
+    $(".banner-text-block h2").html(bannerTexts[realIndex]);
+  }
+
+  var swiper = new Swiper(".mySwiper", {
+    effect: "fade",
+    crossFade: true,
+    loop: true,
+    autoplay: {
+      delay: 7000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    on: {
+      slideChangeTransitionStart: function () {
+        clearTimeout(bannerTextTimer);
+        $(".banner-text-block").removeClass("show");
+      },
+      slideChangeTransitionEnd: function () {
+        var self = this;
+        bannerTextTimer = setTimeout(function () {
+          updateBannerText(self.realIndex);
+          $(".banner-text-block").addClass("show");
+        }, 3000);
+      },
+      init: function () {
+        var self = this;
+        setTimeout(function () {
+          updateBannerText(self.realIndex);
+          $(".banner-text-block").addClass("show");
+        }, 3000);
+      },
+    },
+  });
 }

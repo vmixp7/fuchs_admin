@@ -21,7 +21,7 @@
     <meta name="theme-color" content="#0d6efd" />
     <link rel="apple-touch-icon" href="images/phone_icon.png" />
     <link rel="manifest" href="js/manifest.json" />
-    <link rel="stylesheet" href="css/style.css?v=15" />
+    <link rel="stylesheet" href="css/style.css?v=16" />
     <!-- Pushy -->
     <link rel="stylesheet" href="mobilemenu/pushy.css" />
     <!-- Link Swiper's CSS -->
@@ -135,57 +135,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="mobilemenu/pushy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="js/menu.js?v=14"></script>
-    <script src="js/script.js?v=14"></script>
+    <script src="js/menu.js?v=15"></script>
+    <script src="js/script.js?v=15"></script>
   </body>
 </html>
-<!-- Initialize Swiper -->
-<script>
-  var bannerTextTimer;
-  function updateBannerText(index) {
-    var realIndex = index % bannerTexts.length;
-    $(".banner-text-block h2").html(bannerTexts[realIndex]);
-  }
-  var swiper = new Swiper(".mySwiper", {
-    effect: "fade",
-    crossFade: true,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false,
-    },
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    on: {
-      slideChangeTransitionStart: function () {
-        // 切換時隱藏文字
-        clearTimeout(bannerTextTimer);
-        $(".banner-text-block").removeClass("show");
-      },
-      slideChangeTransitionEnd: function () {
-        var self = this;
-        // 更新文字內容
-        updateBannerText(self.realIndex);
-        // 停頓1秒後顯示文字
-        bannerTextTimer = setTimeout(function () {
-          $(".banner-text-block").addClass("show");
-        }, 1000);
-      },
-      init: function () {
-        var self = this;
-        // 初始化時設定文字
-        updateBannerText(self.realIndex);
-        // 1秒後顯示文字
-        bannerTextTimer = setTimeout(function () {
-          $(".banner-text-block").addClass("show");
-        }, 1000);
-      },
-    },
-  });
-</script>

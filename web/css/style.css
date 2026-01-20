@@ -268,7 +268,7 @@ html {
 }
 
 .index .banner-text-block h2 {
-  font-size: 50px;
+  font-size: 46px;
 }
 
 .banner-text-block {
@@ -277,17 +277,18 @@ html {
   transform: translateY(-50%);
   background: rgba(12, 77, 255, 0.85);
   color: #fff;
-  padding: 50px 80px 50px 50px;
+  padding: 38px 60px 38px 38px;
   z-index: 10;
   transition: opacity 0.5s ease;
   border-radius: 0 200px 200px 0;
+  opacity: 0;
 }
 .banner-text-block.show {
   opacity: 1;
 }
 .banner-text-block h2 {
   margin: 0;
-  font-size: 40px;
+  font-size: 34px;
   line-height: 1.4;
   font-weight: bold;
 }
@@ -1691,14 +1692,14 @@ html {
 
 @media (max-width: 600px) {
   .index .banner-text-block h2 {
-    font-size: 20px;
+    font-size: 14px;
   }
   .banner-text-block {
-    padding: 15px 50px 15px 15px;
+    padding: 10px 25px 10px 10px;
     border-radius: 0 200px 200px 0;
   }
   .banner-text-block h2 {
-    font-size: 16px;
+    font-size: 12px;
   }
   .formosalube-header .right-menu .logo_title {
     gap: 0px;
