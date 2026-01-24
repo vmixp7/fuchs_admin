@@ -9,6 +9,7 @@
 *.tmp
 # 忽略所有名為 node_modules 的資料夾
 node_modules/
+public/uploads/
 
 # 註釋：作業系統相關檔案
 .DS_Store # macOS
