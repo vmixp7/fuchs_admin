@@ -91,7 +91,7 @@ const EmailController = {
       // 郵件選項
       const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: "vmixp7@gmail.com",
+        to: "vcnt.chang@gmail.com",
         subject: subjectName,
         text: mailContent,
       };
