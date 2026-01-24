@@ -495,9 +495,12 @@ html {
 }
 
 .go_back {
-  margin: 0px 50px 30px 50px;
   font-weight: 400;
   color: red;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 50px;
 }
 
 .go_back:hover {
@@ -561,7 +564,7 @@ html {
 @media (max-width: 950px) {
   .megamenu .left-item {
     flex: 180px;
-    padding: 20px;
+    padding: 30px;
   }
 
   .megamenu .iframe-cont {
@@ -606,6 +609,7 @@ html {
   }
   .go_back {
     margin: 0px 50px 30px 30px;
+    padding: 0px;
   }
 }
 
@@ -1091,6 +1095,7 @@ html {
 @media (max-width: 1200px) {
   .formosalube-container .support-cont .mbox {
     gap: 20px;
+    padding: 30px;
   }
 }
 
