@@ -327,6 +327,7 @@ html {
 
 .formosalube-header img {
   width: 100%;
+  margin-left: 0px;
 }
 
 .formosalube-header .logo {
@@ -353,6 +354,7 @@ html {
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-left: 20px;
 }
 
 .formosalube-header .right-menu .logo_title {
@@ -508,13 +510,17 @@ html {
   text-decoration: underline;
 }
 
+.slogan_en {
+  font-size: 23px;
+}
+
 @media (max-width: 1580px) {
   .formosalube-header .right-menu .navbar-nav {
     gap: 30px;
   }
 
   .formosalube-header p.slogan {
-    margin-left: 50px;
+    margin-left: 30px;
   }
 }
 
@@ -544,8 +550,12 @@ html {
   }
 
   .formosalube-header p.slogan {
-    font-size: 13px;
+    font-size: 18px;
     padding-left: 10px;
+  }
+
+  .slogan_en {
+    font-size: 16px;
   }
 
   .formosalube-header .right-menu .menu-item {
@@ -1696,6 +1706,9 @@ html {
 }
 
 @media (max-width: 1200px) {
+  .formosalube-header img {
+    margin-left: 20px;
+  }
   .formosalube-container .seminar-cont .album-list .a-album .album-cover {
     flex: 50%;
   }
@@ -1716,9 +1729,6 @@ html {
   .banner-text-block h2 {
     font-size: 12px;
   }
-  .formosalube-header .right-menu .logo_title {
-    gap: 0px;
-  }
   .formosalube-header .info-content {
     gap: 0px;
   }
@@ -1738,14 +1748,10 @@ html {
   .formosalube-header p.slogan {
     font-size: 8px;
     text-align: left;
-    margin-left: 0px;
+    margin-left: 5px;
     margin-right: 0px;
     padding-right: 0px;
     width: auto;
-  }
-
-  .formosalube-header .logo1 {
-    width: 45vw;
   }
 
   .formosalube-header .logo2 {
@@ -1757,7 +1763,15 @@ html {
   }
 }
 
+/* mobile */
 @media (max-width: 500px) {
+  .formosalube-header .right-menu .logo_title {
+    gap: 0px;
+    margin-left: 8px;
+  }
+  .formosalube-header .logo1 {
+    width: 160px;
+  }
   #pagination .next_button {
     margin: 0px !important;
   }
@@ -1765,6 +1779,15 @@ html {
     overflow-x: auto; /* 允許橫向捲動 */
     white-space: nowrap; /* 強制不換行 */
     padding-bottom: 15px; /* 留點空間給捲軸或陰影 */
+  }
+  .formosalube-header img {
+    margin-left: 5px;
+  }
+  .formosalube-header .right-menu {
+    margin-left: 3px;
+  }
+  .slogan_en {
+    font-size: 7px;
   }
 }
 
