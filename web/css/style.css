@@ -1746,9 +1746,9 @@ html {
   }
 
   .formosalube-header p.slogan {
-    font-size: 8px;
+    font-size: 9px;
     text-align: left;
-    margin-left: 5px;
+    margin-left: 15px;
     margin-right: 0px;
     padding-right: 0px;
     width: auto;
@@ -1788,6 +1788,16 @@ html {
   }
   .slogan_en {
     font-size: 7px;
+  }
+}
+
+@media (max-width: 400px) {
+  .formosalube-header p.slogan {
+    font-size: 8px;
+    margin-left: 2px;
+  }
+  .slogan_en {
+    font-size: 6px;
   }
 }
 
