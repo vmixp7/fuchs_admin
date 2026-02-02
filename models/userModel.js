@@ -9,6 +9,16 @@ export const findUserByUsername = (username, callback) => {
 };
 
 // 驗證帳密
+// 更新密碼
+export const updatePassword = (userId, newHashedPassword) => {
+    return new Promise((resolve, reject) => {
+        db.query("UPDATE fu_users SET password = ? WHERE id = ?", [newHashedPassword, userId], (err, results) => {
+            if (err) reject(err);
+            else resolve(results);
+        });
+    });
+};
+
 export const verifyUserPassword = (username, password, callback) => {
     findUserByUsername(username, (err, user) => {
         if (err) return callback(err);

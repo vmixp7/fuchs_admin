@@ -15,6 +15,8 @@ import IndexController from "../controllers/indexController.js";
 import ContentsController from "../controllers/contentsController.js";
 import EmailController from "../controllers/emailController.js";
 import upload from "../config/upload.js";
+import bcrypt from "bcrypt";
+import { findUserByUsername, updatePassword } from "../models/userModel.js";
 
 const router = express.Router();
 
@@ -40,6 +42,36 @@ router.get("/about", (req, res) => {
 router.get("/qa", (req, res) => {
   if (!req.session.user) return res.redirect("/");
   res.render("qa", { username: req.session.user.username });
+});
+
+// 修改密碼 API 路由
+router.put("/api/change-password", async (req, res) => {
+  if (!req.session.user) return res.status(401).json({ message: "未登入" });
+
+  const { currentPassword, newPassword } = req.body;
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ message: "請填寫所有欄位" });
+  }
+
+  try {
+    const user = await new Promise((resolve, reject) => {
+      findUserByUsername(req.session.user.username, (err, user) => {
+        if (err) reject(err);
+        else resolve(user);
+      });
+    });
+
+    if (!user) return res.status(404).json({ message: "使用者不存在" });
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) return res.status(400).json({ message: "目前密碼錯誤" });
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    await updatePassword(user.id, hashedPassword);
+    res.json({ message: "密碼修改成功" });
+  } catch (error) {
+    res.status(500).json({ message: "密碼修改失敗" });
+  }
 });
 
 // 促销信息 API 路由
