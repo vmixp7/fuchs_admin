@@ -2,7 +2,7 @@ const bannerTexts = [
   "德國福斯FUCHS<br>原廠推薦<span>商用重車潤滑油</span>",
   "德國福斯FUCHS<br>先進科技<span>金屬加工潤滑油</span>",
   "德國福斯FUCHS<br>超高性能<span>工程機具潤滑油</span>",
-  "德國福斯FUCHS<br>全球獨創<span>XTL 極限潤滑科技</span>",
+  "德國福斯FUCHS<br>全球獨創<span>XTL極限潤滑科技</span>",
   "德國福斯FUCHS<br>眾多認證<span>農機專用潤滑油</span>",
 ];
 
