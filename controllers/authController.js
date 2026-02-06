@@ -3,7 +3,7 @@ import { verifyUserPassword } from "../models/userModel.js";
 export const showLogin = (req, res) => {
   // 如果已登入就直接導向後台
   if (req.session.user) {
-    return res.redirect("/admin");
+    return res.redirect("/dashboard");
   }
   res.render("login", { title: "登入", message: null });
 };
