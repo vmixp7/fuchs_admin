@@ -106,10 +106,13 @@ body {
   line-height: 1;
 }
 
-h3,h4,h5 {
+h3,
+h4,
+h5 {
   font-weight: 500 !important;
 }
-.formosalube-container p,.formosalube-container li {
+.formosalube-container p,
+.formosalube-container li {
   font-size: 18px !important;
   font-weight: 300 !important;
 }
@@ -188,15 +191,7 @@ h4,
 h5,
 h6,
 p {
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    sans-serif,
-    "Noto Sans TC",
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol,
-    Noto Color Emoji;
+  font-family: "Roboto", sans-serif;
   font-feature-settings: normal;
   font-variation-settings: normal;
 }
@@ -534,6 +529,25 @@ html {
 
 .slogan_en {
   font-size: 23px;
+}
+
+.about_li {
+  list-style-type: disc;
+  list-style-position: unset;
+  padding-left: 15px;
+}
+
+.about_li li {
+  padding-left: 64px;
+  text-indent: -64px;
+}
+
+.about_li li::marker {
+  color: red;
+}
+
+.about_li li span {
+  font-weight: 600;
 }
 
 @media (max-width: 1580px) {
@@ -1414,7 +1428,7 @@ html {
 
 .formosalube-container .contact-cont h2 {
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 500;
   padding: 20px 0;
   line-height: 1.5;
 }
