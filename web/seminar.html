@@ -245,6 +245,7 @@
       type: "GET",
       dataType: "json",
       success: function (response) {
+        console.log("研討會資料:", response);
         var seminarList = $("#seminar-list");
         seminarList.empty();
 
@@ -262,8 +263,7 @@
 
             var albumHtml = '<div class="a-album">';
 
-            // Add all images for this seminar (up to 20 images)
-            for (var i = 1; i <= 20; i++) {
+            for (var i = 1; i <= item.imgtotal; i++) {
               var imgNum = i.toString().padStart(2, "0");
               var fname = `${prefix}${item.startday}_${imgNum}.jpg`;
               var imgUrl = `${FORMOSA_URL}/images/seminar/${fname}`;
@@ -283,9 +283,7 @@
                             <figcaption>
                                 <p class="album-title">${title}</p>
                                 <p class="album-text">${content}</p>
-                                <a class="more" data-fancybox="${galleryId}"
-                                    data-src="${FORMOSA_URL}/images/seminar/${prefix}${item.startday}_01.jpg"
-                                    data-caption="${title}">
+                                <a class="more" href="javascript:void(0)" onclick="document.querySelector('[data-fancybox=\\'${galleryId}\\'].album-cover').click()">
                                     觀看照片
                                 </a>
                             </figcaption>
